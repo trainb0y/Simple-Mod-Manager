@@ -1,2 +1,2 @@
 # DF Mod Manager
-A mod manager for Dwarf Fortress
+A simple mod manager for Dwarf Fortress
