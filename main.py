@@ -31,34 +31,35 @@ class MainWindow(tk.Frame):
         self.create_widgets()
     
     def create_widgets(self):
-        self.loaded_mods_label = tk.Label(self,text="Loaded Mods:")
-        self.loaded_mods_label.grid(row=0,column=0,sticky="w")
+       
+        self.help_button = tk.Button(self,text="Help",command=lambda: tkinter.messagebox.showinfo("Help",'This program can help with the loading and unloading of mods for Dwarf Fortress. This file should be placed in the main DF directory, along with a folder called "mods" (without the quotes) that contains all of the individual mod folders. Mod folders should contain a folder called "raw" (again, without the quotes) that contains all of the files to load in. Anything outside of the raw folder is ignored. \n\nPlease do not delete mod_info.json, as doing such will cause whatever is currently in the DF raw folder to become the default. (Well, unless you want it to be)\n\nTHERE IS NO GUARANTEE THAT THIS WILL NOT DESTROY ALL RAWS'))
+        self.help_button.grid(row=0,column=0,columnspan=2,ipadx=30)
 
-        self.help_button = tk.Button(self,text="Help",command=lambda: tkinter.messagebox.showinfo("Help",'This program can help with the loading and unloading of mods for Dwarf Fortress. This file should be placed in the main DF directory, along with a folder called "mods" (without the quotes) that contains all of the individual mod folders. Mod folders should contain a folder called "raw" (again, without the quotes) that contains all of the files to load in. Anything outside of the raw folder is ignored. Please do not delete mod_info.json, as doing such will cause whatever is currently in the DF raw folder to become the default.\n\nTHERE IS NO GUARANTEE THAT THIS WILL NOT DESTROY ALL RAWS'))
-        self.help_button.grid(row=0,column=1)
+        self.loaded_mods_labelframe = tk.LabelFrame(self,text="Loaded Mods",bd=6) # bd is border thickness
+        self.loaded_mods_labelframe.grid(row=1,column=0,columnspan=2)
 
-        self.loaded_mods_listbox = tk.Listbox(self,width=30,selectmode=tk.BROWSE)
-        self.loaded_mods_scrollbar = tk.Scrollbar(self,orient="vertical",command=self.loaded_mods_listbox.yview)
+        self.loaded_mods_listbox = tk.Listbox(self.loaded_mods_labelframe,width=30,selectmode=tk.BROWSE)
+        self.loaded_mods_scrollbar = tk.Scrollbar(self.loaded_mods_labelframe,orient="vertical",command=self.loaded_mods_listbox.yview)
         self.loaded_mods_listbox.configure(yscrollcommand=self.loaded_mods_scrollbar.set)
 
-        self.loaded_mods_listbox.grid(row=1,pady=10,padx=10,columnspan=2, sticky="nsew")
-        self.loaded_mods_scrollbar.grid(row=1, column=3, sticky="ns")
+        self.loaded_mods_listbox.grid(row=0,pady=10,padx=10,columnspan=2, sticky="nsew")
+        self.loaded_mods_scrollbar.grid(row=0, column=3, sticky="ns")
 
-        self.load_button = tk.Button(self,text="Load Mod",command=self.load_mod)
-        self.load_button.grid(row=2,column=0)
+        self.load_button = tk.Button(self,text="Load Mod",command=self.load_mod,pady=5)
+        self.load_button.grid(row=2,column=0,sticky="ew")
 
-        self.remove_button = tk.Button(self,text="Remove Mod",command=self.remove_mod)
-        self.remove_button.grid(row=2,column=1)
+        self.remove_button = tk.Button(self,text="Remove Mod",command=self.remove_mod,pady=5)
+        self.remove_button.grid(row=2,column=1,sticky="ew")
 
-        self.availible_mods_label = tk.Label(self,text="Availible Mods:")
-        self.availible_mods_label.grid(row=3,column=0,sticky="w")
+        self.availible_mods_labelframe = tk.LabelFrame(self,text="Availible Mods",bd=6)
+        self.availible_mods_labelframe.grid(row=3,column=0,columnspan=2)
 
-        self.availible_mods_listbox = tk.Listbox(self,width=30,selectmode=tk.BROWSE)
-        self.availible_mods_scrollbar = tk.Scrollbar(self,orient="vertical",command=self.availible_mods_listbox.yview)
+        self.availible_mods_listbox = tk.Listbox(self.availible_mods_labelframe,width=30,selectmode=tk.BROWSE)
+        self.availible_mods_scrollbar = tk.Scrollbar(self.availible_mods_labelframe,orient="vertical",command=self.availible_mods_listbox.yview)
         self.availible_mods_listbox.configure(yscrollcommand=self.availible_mods_scrollbar.set)
 
-        self.availible_mods_listbox.grid(row=4,pady=10,padx=10,columnspan=2, sticky="nsew")
-        self.availible_mods_scrollbar.grid(row=4, column=3, sticky="ns")
+        self.availible_mods_listbox.grid(row=0,pady=10,padx=10,columnspan=2, sticky="nsew")
+        self.availible_mods_scrollbar.grid(row=0, column=3, sticky="ns")
 
         self.find_avalible_mods()
         self.find_loaded_mods()
