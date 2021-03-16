@@ -64,9 +64,6 @@ class MainWindow(tk.Frame):
         self.find_avalible_mods()
         self.find_loaded_mods()
 
-    
-
-    def open_settings(self): pass
 
     def find_loaded_mods(self):
         self.loaded_mods_listbox.delete(0,tk.END) # Delete all entries before adding new ones
