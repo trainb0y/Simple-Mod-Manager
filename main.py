@@ -1,6 +1,5 @@
 import tkinter as tk
 import os, shutil, json
-from tkinter.constants import BROWSE
 import tkinter.messagebox
 
 df_dir = os.path.dirname(os.path.abspath(__file__))
