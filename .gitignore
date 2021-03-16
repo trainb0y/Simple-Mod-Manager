@@ -127,3 +127,11 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Example mods folder
+Mods/
+# Example df raw folder
+raw/
+raw-original/
+# JSON for information storage
+mod_info.json
