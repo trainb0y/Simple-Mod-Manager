@@ -78,33 +78,36 @@ class MainWindow(tk.Frame):
         self.availible_mods_listbox.delete(0,tk.END) # Delete all entries before adding new ones
         # Get a list of avaiblible mods 
         self.avalible_mods = {}
-        for mod in os.listdir(mod_folder):
-            #print(f"Possible mod folder: {mod}") 
-            #print(os.path.join(mod_folder,mod))
-            if os.path.isdir(os.path.join(mod_folder,mod)): # Mods need to be directories
-                #print(f"Items inside of {mod}: {os.listdir(os.path.join(mod_folder,mod))}")
-                for possible_raw_folder in os.listdir(os.path.join(mod_folder,mod)): 
-                    if os.path.isdir(os.path.join(mod_folder,mod,possible_raw_folder)) and possible_raw_folder == "raw": # raw folder inside the mod folder contains everything we need
-                        # We now this directory inside of Mods contains a directory named "raw", so it seems to be a valid mod
-                        # Add it to the modlist, if it isn't already there
-                        try:
-                            with open(os.path.join(df_dir,"mod_info.json"), "r") as f:
-                                mod_info = json.load(f)
+        try:
+            for mod in os.listdir(mod_folder):
+                #print(f"Possible mod folder: {mod}") 
+                #print(os.path.join(mod_folder,mod))
+                if os.path.isdir(os.path.join(mod_folder,mod)): # Mods need to be directories
+                    #print(f"Items inside of {mod}: {os.listdir(os.path.join(mod_folder,mod))}")
+                    for possible_raw_folder in os.listdir(os.path.join(mod_folder,mod)): 
+                        if os.path.isdir(os.path.join(mod_folder,mod,possible_raw_folder)) and possible_raw_folder == "raw": # raw folder inside the mod folder contains everything we need
+                            # We now this directory inside of Mods contains a directory named "raw", so it seems to be a valid mod
+                            # Add it to the modlist, if it isn't already there
+                            try:
+                                with open(os.path.join(df_dir,"mod_info.json"), "r") as f:
+                                    mod_info = json.load(f)
 
-                        except FileNotFoundError: # The file doesn't exist yet, probably the first time running this
-                            mod_info = {"Loaded Mods":[" "]} # The spaces are there so that it isn't saved as null
-                            with open(os.path.join(df_dir,"mod_info.json"),"w") as f:
-                                json.dump(mod_info,f)
-                            
-                            # We should also copy DF's raws because a good chunk of mods overwrite them
-                            merge_dirs(os.path.join(df_dir,"raw"),os.path.join(df_dir,"raw-original"))
-          
-                        if mod not in mod_info["Loaded Mods"]:
-                            self.availible_mods_listbox.insert(tk.END,mod)
-                            self.avalible_mods[mod] = os.path.join(os.path.join(mod_folder,mod))  
-                            #print(f"Found raw folder in {mod}")
+                            except FileNotFoundError: # The file doesn't exist yet, probably the first time running this
+                                mod_info = {"Loaded Mods":[" "]} # The spaces are there so that it isn't saved as null
+                                with open(os.path.join(df_dir,"mod_info.json"),"w") as f:
+                                    json.dump(mod_info,f)
+                                
+                                # We should also copy DF's raws because a good chunk of mods overwrite them
+                                merge_dirs(os.path.join(df_dir,"raw"),os.path.join(df_dir,"raw-original"))
+            
+                            if mod not in mod_info["Loaded Mods"]:
+                                self.availible_mods_listbox.insert(tk.END,mod)
+                                self.avalible_mods[mod] = os.path.join(os.path.join(mod_folder,mod))  
+                                #print(f"Found raw folder in {mod}")
 
-                           
+        except FileNotFoundError: # Generally this means there is no mod folder.
+            tkinter.messagebox.showerror("Error",'Mods folder not found! Please create a "mods" folder inside of the DF folder!')
+            raise SystemExit
 
 
     def load_mod(self,mod=False):
