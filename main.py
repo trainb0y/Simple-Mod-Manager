@@ -195,7 +195,7 @@ class MainWindow(tk.Frame):
 
         except FileNotFoundError: # Generally this means there is no mod folder.
             tkinter.messagebox.showerror("Error",'Mods folder not found! Please create a "mods" folder and select it in the settings!')
-            raise SystemExit # What sys.exit does, without importing sys
+            # raise SystemExit # What sys.exit does, without importing sys
 
 
     def load_mod(self,mod=False):
@@ -271,3 +271,5 @@ if __name__ == "__main__": # as if it would never not be
     root.geometry("")
     app = MainWindow(root)
     app.mainloop()
+
+# pyinstaller -n SimpleModManager -windowed main.py
