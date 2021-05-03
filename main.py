@@ -156,11 +156,17 @@ class MainWindow(tk.Frame):
     def find_loaded_mods(self):
         self.loaded_mods_listbox.delete(0,tk.END) # Delete all entries before adding new ones
         # Get a list of loaded mods
-        with open(os.path.join(df_dir,"mod_info.json"), "r") as f:
-            mod_info = json.load(f)
-        for mod in mod_info["Loaded Mods"]:
-            if mod != " ": # That is the default starter value
-                self.loaded_mods_listbox.insert(tk.END,mod)
+        try:
+            with open(os.path.join(df_dir,"mod_info.json"), "r") as f:
+                mod_info = json.load(f)
+            for mod in mod_info["Loaded Mods"]:
+                if mod != " ": # That is the default starter value
+                    self.loaded_mods_listbox.insert(tk.END,mod)
+        except FileNotFoundError:
+            tkinter.messagebox.showinfo("File not found!","mod_info.json not found, creating in main DF directory")
+            with open(os.path.join(df_dir,"mod_info.json"), "x") as f:
+                json.dump({"Loaded Mods":[]},f)
+
 
     def find_avalible_mods(self):
         self.availible_mods_listbox.delete(0,tk.END) # Delete all entries before adding new ones
@@ -272,4 +278,4 @@ if __name__ == "__main__": # as if it would never not be
     app = MainWindow(root)
     app.mainloop()
 
-# pyinstaller -n SimpleModManager -windowed main.py
+# pyinstaller -n SimpleModManager --debug main.py
