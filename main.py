@@ -229,7 +229,7 @@ class MainWindow(tk.Frame):
         self.find_loaded_mods()
 
     def open_settings(self):
-        SettingsWindow()
+        SettingsWindow(self.master)
         self.find_avalible_mods()
         self.find_loaded_mods()
 
