@@ -103,6 +103,9 @@ class SettingsWindow(tk.Toplevel):
         with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"smm_settings.json"), "w") as f:
             json.dump({"DF Dir":df_dir,"Mod Dir":mod_dir},f) # Save the json
 
+        self.master.find_avalible_mods()
+        self.master.find_loaded_mods()
+
         tkinter.messagebox.showinfo("Success","Changes have been applied")
         
 
@@ -229,9 +232,8 @@ class MainWindow(tk.Frame):
         self.find_loaded_mods()
 
     def open_settings(self):
-        SettingsWindow(self.master)
-        self.find_avalible_mods()
-        self.find_loaded_mods()
+        SettingsWindow(self)
+        
 
     def remove_mod(self): 
         try:
