@@ -117,10 +117,10 @@ class MainWindow(tk.Frame):
     
     def create_widgets(self):
        
-        self.help_button = tk.Button(self,text="Help",command=lambda: tkinter.messagebox.showinfo("Help",'This program can help with the loading and unloading of mods for Dwarf Fortress. Mod folders should go in a mods folder, selected in the settings. Mod folders should contain a folder called "raw" (again, without the quotes) that contains all of the files to load in. Anything outside of the raw folder is ignored. \n\nPlease do not delete mod_info.json, as doing such will cause whatever is currently in the DF raw folder to become the default. (Well, unless you want it to be)\n\nTHERE IS NO GUARANTEE THAT THIS WILL NOT DESTROY ALL RAWS'))
+        self.help_button = tk.Button(self,text="Help",command=lambda: tkinter.messagebox.showinfo("Help",'This program can help with the loading and unloading of mods for Dwarf Fortress. Mod folders should go in a mods folder, selected in the settings. Mod folders should contain a folder called "raw" (without the quotes) that contains all of the files to load in. Anything outside of the raw folder is ignored. \n\nPlease do not delete mod_info.json, as doing such will cause whatever is currently in the DF raw folder to become the default. (Well, unless you want it to be)\n\nTHERE IS NO GUARANTEE THAT THIS WILL NOT DESTROY OR OTHERWISE DAMAGE ALL RAWS\n\nIf something does happen, an original copy of the DF raws can be found in the raw-original directory.'))
         self.help_button.grid(row=0,column=0,ipadx=30)
 
-        self.settings_button = tk.Button(self,text="Settings",command=lambda: SettingsWindow(self.master))
+        self.settings_button = tk.Button(self,text="Settings",command=self.open_settings)
         self.settings_button.grid(row=0,column=1,ipadx=30)
 
         self.loaded_mods_labelframe = tk.LabelFrame(self,text="Loaded Mods",bd=6) # bd is border thickness
@@ -228,7 +228,10 @@ class MainWindow(tk.Frame):
         self.find_avalible_mods()
         self.find_loaded_mods()
 
-
+    def open_settings(self):
+        SettingsWindow()
+        self.find_avalible_mods()
+        self.find_loaded_mods()
 
     def remove_mod(self): 
         try:
@@ -278,4 +281,4 @@ if __name__ == "__main__": # as if it would never not be
     app = MainWindow(root)
     app.mainloop()
 
-# pyinstaller -n SimpleModManager --debug main.py
+# pyinstaller -n SimpleModManager --windowed main.py
