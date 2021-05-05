@@ -142,15 +142,15 @@ class MainWindow(tk.Frame):
         self.remove_button = tk.Button(self,text="Remove Mod",command=self.remove_mod,pady=5)
         self.remove_button.grid(row=2,column=1,sticky="ew")
 
-        self.availible_mods_labelframe = tk.LabelFrame(self,text="Availible Mods",bd=6)
-        self.availible_mods_labelframe.grid(row=3,column=0,columnspan=2)
+        self.available_mods_labelframe = tk.LabelFrame(self,text="Available Mods",bd=6)
+        self.available_mods_labelframe.grid(row=3,column=0,columnspan=2)
 
-        self.availible_mods_listbox = tk.Listbox(self.availible_mods_labelframe,width=30,selectmode=tk.BROWSE)
-        self.availible_mods_scrollbar = tk.Scrollbar(self.availible_mods_labelframe,orient="vertical",command=self.availible_mods_listbox.yview)
-        self.availible_mods_listbox.configure(yscrollcommand=self.availible_mods_scrollbar.set)
+        self.available_mods_listbox = tk.Listbox(self.available_mods_labelframe,width=30,selectmode=tk.BROWSE)
+        self.available_mods_scrollbar = tk.Scrollbar(self.available_mods_labelframe,orient="vertical",command=self.available_mods_listbox.yview)
+        self.available_mods_listbox.configure(yscrollcommand=self.available_mods_scrollbar.set)
 
-        self.availible_mods_listbox.grid(row=0,pady=10,padx=10,columnspan=2, sticky="nsew")
-        self.availible_mods_scrollbar.grid(row=0, column=3, sticky="ns")
+        self.available_mods_listbox.grid(row=0,pady=10,padx=10,columnspan=2, sticky="nsew")
+        self.available_mods_scrollbar.grid(row=0, column=3, sticky="ns")
 
         self.find_avalible_mods()
         self.find_loaded_mods()
@@ -172,7 +172,7 @@ class MainWindow(tk.Frame):
 
 
     def find_avalible_mods(self):
-        self.availible_mods_listbox.delete(0,tk.END) # Delete all entries before adding new ones
+        self.available_mods_listbox.delete(0,tk.END) # Delete all entries before adding new ones
         # Get a list of avaiblible mods 
         self.avalible_mods = {}
         try:
@@ -198,7 +198,7 @@ class MainWindow(tk.Frame):
                                 merge_dirs(os.path.join(df_dir,"raw"),os.path.join(df_dir,"raw-original"))
             
                             if mod not in mod_info["Loaded Mods"]:
-                                self.availible_mods_listbox.insert(tk.END,mod)
+                                self.available_mods_listbox.insert(tk.END,mod)
                                 self.avalible_mods[mod] = os.path.join(os.path.join(mod_dir,mod))  
                                 #print(f"Found raw folder in {mod}")
 
@@ -211,7 +211,7 @@ class MainWindow(tk.Frame):
         # Figure out what the user has selected
         if mod == False:
             try:
-                mod = self.availible_mods_listbox.get(self.availible_mods_listbox.curselection())
+                mod = self.available_mods_listbox.get(self.available_mods_listbox.curselection())
             except tk.TclError:
                 tkinter.messagebox.showerror("Error","No mod selected to install!")
                 return
