@@ -103,7 +103,7 @@ class SettingsWindow(tk.Toplevel):
         with open(os.path.join(os.path.dirname(os.path.abspath(__file__)),"smm_settings.json"), "w") as f:
             json.dump({"DF Dir":df_dir,"Mod Dir":mod_dir},f) # Save the json
 
-        self.master.find_avalible_mods()
+        self.master.find_available_mods()
         self.master.find_loaded_mods()
 
         tkinter.messagebox.showinfo("Success","Changes have been applied")
@@ -152,7 +152,7 @@ class MainWindow(tk.Frame):
         self.available_mods_listbox.grid(row=0,pady=10,padx=10,columnspan=2, sticky="nsew")
         self.available_mods_scrollbar.grid(row=0, column=3, sticky="ns")
 
-        self.find_avalible_mods()
+        self.find_available_mods()
         self.find_loaded_mods()
 
 
@@ -171,10 +171,10 @@ class MainWindow(tk.Frame):
                 json.dump({"Loaded Mods":[]},f)
 
 
-    def find_avalible_mods(self):
+    def find_available_mods(self):
         self.available_mods_listbox.delete(0,tk.END) # Delete all entries before adding new ones
         # Get a list of avaiblible mods 
-        self.avalible_mods = {}
+        self.available_mods = {}
         try:
             for mod in os.listdir(mod_dir):
                 #print(f"Possible mod folder: {mod}") 
@@ -199,7 +199,7 @@ class MainWindow(tk.Frame):
             
                             if mod not in mod_info["Loaded Mods"]:
                                 self.available_mods_listbox.insert(tk.END,mod)
-                                self.avalible_mods[mod] = os.path.join(os.path.join(mod_dir,mod))  
+                                self.available_mods[mod] = os.path.join(os.path.join(mod_dir,mod))  
                                 #print(f"Found raw folder in {mod}")
 
         except FileNotFoundError: # Generally this means there is no mod folder.
@@ -228,7 +228,7 @@ class MainWindow(tk.Frame):
         with open(os.path.join(df_dir,"mod_info.json"), "w") as f:
             json.dump(mod_info,f) # Save the json
         
-        self.find_avalible_mods()
+        self.find_available_mods()
         self.find_loaded_mods()
 
     def open_settings(self):
@@ -270,7 +270,7 @@ class MainWindow(tk.Frame):
         with open(os.path.join(df_dir,"mod_info.json"), "w") as f:
             json.dump(mod_info,f) # Save the json
 
-        self.find_avalible_mods()
+        self.find_available_mods()
         self.find_loaded_mods()
 
 
